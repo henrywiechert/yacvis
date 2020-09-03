@@ -1,0 +1,16 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Authentication": {
+	    "Bucket": "elasticbeanstalk-eu-central-1-016528340732",
+	    "Key": "dockercfg"
+    },
+    "Image": {
+      "Name": "dockerhenry/covid-stats",
+      "Update": "true"
+    },
+    "Ports": [
+      {
+        "ContainerPort": "8050"
+      }
+    ]
+}
