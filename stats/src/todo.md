@@ -6,6 +6,7 @@
 - n-day average line
 - cases in relation to population
 - deaths column in dataframe
+- show death graphs in tabs
 - population column in dataframe
 - index column in table (independent on sorting)
 - better/cleaner layout/colors
