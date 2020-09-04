@@ -33,7 +33,8 @@ def layout():
                     dash_table.DataTable(
                         id='table',
                         columns=[{"name": 'Country', "id": 'Country'},
-                                 {"name": 'Cases', "id": 'Cases'}])
+                                 {"name": 'Cases', "id": 'Cases'}],
+                        sort_action='native')
                 ],
                 style={'margin-top': 10, 'margin-bottom': 10, 'margin-left': 20, 'margin-right': 20},
             ),

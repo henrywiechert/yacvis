@@ -17,10 +17,11 @@ GIT_STATUS = os.environ.get('GIT_STATUS') or 'unknown'
 
 navbar = dbc.NavbarSimple(
     children=[
+        dbc.NavItem(dbc.NavLink("Dashboard", href="/apps/dashboard")),
         dbc.DropdownMenu(
             nav=True,
             in_navbar=True,
-            label="Menu",
+            label="More",
             children=[
                 dbc.DropdownMenuItem("Dashboard", href='/apps/dashboard'),
                 dbc.DropdownMenuItem("SysInfo", href='/apps/sysinfo'),
@@ -29,7 +30,9 @@ navbar = dbc.NavbarSimple(
             ],
         ),
     ],
+    brand="Yet Another Covid19 Visualization - YACVID",
     sticky="left",
+    color="primary",
 )
 
 

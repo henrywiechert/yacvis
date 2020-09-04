@@ -13,10 +13,6 @@ layout = html.Div(id='dashboard-layout')
     Output('dashboard-layout', 'children'),
     [Input('memory-store', 'data')])
 def update(parameter_list):
-    print('dashboard-update')
     return html.Div([
-        html.H3('Dashboard'),
-        table.layout(),
-        html.Div(id='dashboard-columns'),
-        html.H4('Columns:' + 'unknown')
+        table.layout()
         ])
