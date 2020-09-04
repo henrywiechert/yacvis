@@ -30,7 +30,7 @@ navbar = dbc.NavbarSimple(
             ],
         ),
     ],
-    brand="Yet Another Covid19 Visualization - YACVID",
+    brand="Yet Another Covid19 Visualization - YACVIS",
     sticky="left",
     color="primary",
 )

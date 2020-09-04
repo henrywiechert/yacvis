@@ -1,5 +1,6 @@
 # TODO
 
+- remove '/' from country names
 - clear naming of axes
 - n-cases starting point display toggle
 - n-day average line
@@ -8,6 +9,7 @@
 - population column in dataframe
 - index column in table (independent on sorting)
 - better/cleaner layout/colors
+- keep table header always visible
 - new features like:
     - detect second wave
     - detect current criticality (e.g. highest relative increase in last 7 days)
