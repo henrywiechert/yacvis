@@ -33,17 +33,20 @@ navbar = dbc.NavbarSimple(
 )
 
 
-app.layout = html.Div([ dcc.Location(id='url', refresh=False),
-                        dcc.Store(id='memory-store', storage_type='session'),
-                        navbar,
-                        html.Div(id='page-content'),
-                        html.Div('GIT revision: ' + GIT_SHA + ' (' + GIT_STATUS + ')',
-                                style=
-                                { 'color': 'white',
-                                  'fontSize': 14,
-                                  'text-align': 'center',
-                                  'margin-top': 50,
-                                  'background-color': 'lightgray' }) ])
+app.layout = html.Div(
+    style={'margin-top': 10, 'margin-bottom': 10, 'margin-left': 20, 'margin-right': 20},
+    children=[
+        dcc.Location(id='url', refresh=False),
+        dcc.Store(id='memory-store', storage_type='session'),
+        navbar,
+        html.Div(id='page-content'),
+        html.Div(
+            'GIT revision: ' + GIT_SHA + ' (' + GIT_STATUS + ')',
+            style={ 'color': 'white',
+                    'fontSize': 14,
+                    'text-align': 'center',
+                    'margin-top': 50,
+                    'background-color': 'lightgray' }) ])
 
 
 @app.callback(Output('page-content', 'children'),
