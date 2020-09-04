@@ -18,7 +18,6 @@ def get_country_df(country):
 
 def get_data(country):
     df = brain['df_covid']
-    print(df[country])
     return df[country]
 
 def layout():
