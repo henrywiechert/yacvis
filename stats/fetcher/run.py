@@ -42,6 +42,8 @@ def transform(df, indexer):
 
 def setIndex(df, df_t):
     df_t.columns = df['Country/Region'] + '/' + df['Province/State'].replace(np.NaN, '')
+    df_t.columns = df_t.columns.str.rstrip('/')
+    print(df_t)
     return df_t
 
 

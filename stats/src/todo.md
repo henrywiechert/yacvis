@@ -1,6 +1,6 @@
 # TODO
 
-- remove '/' from country names
+x remove '/' from country names
 - clear naming of axes
 - n-cases starting point display toggle
 - n-day average line
@@ -16,3 +16,4 @@
     - detect current criticality (e.g. highest relative increase in last 7 days)
     - detect highest "weekend" gaps
     - detect non-regular datasets (strange value changes etc.)
+    - store presets (e.g. Country selection)
