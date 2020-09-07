@@ -35,12 +35,11 @@ navbar = dbc.Row(dbc.Col(
         sticky="left",
         color="primary",
     ),
-    width=12,
+    #width=12,
 ))
 
 
-app.layout = html.Div(
-#    style={'margin-top': 10, 'margin-bottom': 10, 'margin-left': 20, 'margin-right': 20},
+app.layout = dbc.Container(html.Div(
     children=[
         dcc.Location(id='url', refresh=False),
         dcc.Store(id='memory-store', storage_type='session'),
@@ -53,6 +52,7 @@ app.layout = html.Div(
                     'text-align': 'center',
                     'margin-top': 50,
                     'background-color': 'lightgray' }) ])
+)
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
