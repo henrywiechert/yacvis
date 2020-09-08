@@ -5,9 +5,9 @@ import argparse
 import logging
 from brain_plasma import Brain
 
-# example file:
+# example files:
 # https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv
-
+# https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv
 logger = logging.getLogger(__name__)
 brain = Brain()
 
@@ -22,7 +22,8 @@ def setLogLevel(isDebugEnabled):
 def createArgsParser():
     logger.debug("Create Parser")
     parser = argparse.ArgumentParser(description='Fetch covid csv data from Johns Hopkins University Repo')
-    parser.add_argument( '-f', '--file', help='input file name (perf/intel_pt trace)', metavar='<file>', required=True )
+    parser.add_argument( '-c', '--cases', help='global cases file', metavar='<file>', required=True )
+    parser.add_argument( '-e', '--deaths', help='global deaths file', metavar='<file>', required=True )
     parser.add_argument( '-d', '--debug', action="store_true", help='enable debug output' )
     parser.add_argument( '-D', '--dry-run', action="store_true", help='disable file creation' )
     return parser.parse_args()
@@ -64,9 +65,9 @@ def transformDataframeMultiIndex(df):
     return df
 
 
-def storeDataframeIfNeeded(df):
-    if brain.exists('df_covid'):
-        if df.equals(brain['df_covid']):
+def storeDataframesIfNeeded(df_c, df_d):
+    if brain.exists('df_covid_cases'):
+        if df_c.equals(brain['df_covid_cases']) and df_d.equals(brain['df_covid_deaths']):
             logger.info('No changes | Skip writing dataframe')
             return
         else:
@@ -74,22 +75,26 @@ def storeDataframeIfNeeded(df):
     else:
         logger.info('No object | Write dataframe to brain object')
 
-    brain['df_covid'] = df
+    brain['df_covid_cases'] = df_c
+    brain['df_covid_deaths'] = df_d
 
 
 def main():
     args = createArgsParser()
     setLogLevel(args.debug)
 
-    url = args.file
+    url_cases = args.cases
+    url_deaths = args.deaths
     try:
-        df = pd.read_csv(url)
+        df_cases = pd.read_csv(url_cases)
+        df_deaths = pd.read_csv(url_deaths)
     except:
-        logger.error('Could not read URL {}', url)
+        logger.error('Could not read URL')
         exit()
     else:
-        df = transformDataframe(df)
-        storeDataframeIfNeeded(df)
+        df_cases = transformDataframe(df_cases)
+        df_deaths = transformDataframe(df_deaths)
+        storeDataframesIfNeeded(df_cases, df_deaths)
 
 if __name__ == '__main__':
     main()

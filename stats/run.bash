@@ -14,7 +14,7 @@ fi
 echo "PYTHON=$PYTHON"
 
 # initial fetch
-$PYTHON fetcher/run.py -f 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv'
+$PYTHON fetcher/run.py -c 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv' -e 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv'
 # start cron to trigger fetch every minute
 cron
 

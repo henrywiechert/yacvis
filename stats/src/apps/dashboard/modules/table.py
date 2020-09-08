@@ -12,19 +12,19 @@ import plotly.graph_objects as go
 
 brain = Brain()
 
-def get_country_df(country):
-    df = brain['df_covid'].tail(1).T
+def get_country_df_cases(country):
+    df = brain['df_covid_cases'].tail(1).T
     if not country:
         return df
     else:
         return df.filter(country, axis=0)
 
-def get_data(country):
-    df = brain['df_covid']
+def get_data_cases(country):
+    df = brain['df_covid_cases']
     return df[country]
 
-def get_data_frame():
-    df = brain['df_covid']
+def get_data_frame_cases():
+    df = brain['df_covid_cases']
     return df
 
 def layout():
@@ -32,7 +32,7 @@ def layout():
             children=[
                 dbc.Row(dbc.Col(dcc.Dropdown(
                     id="dropdown_country",
-                    options=[{"label": x,"value": x} for x in brain['df_covid'].T.index],
+                    options=[{"label": x,"value": x} for x in brain['df_covid_cases'].T.index],
                     value=['Germany', 'Italy'],
                     multi=True,
                     searchable=True,
@@ -64,7 +64,7 @@ def layout():
 @app.callback(Output('table', 'data'),
               [Input('dropdown_country', 'value')])
 def display_table(country):
-    return [{'Country': k, 'Cases': v[0]} for k, v in get_country_df(country).iterrows()]
+    return [{'Country': k, 'Cases': v[0]} for k, v in get_country_df_cases(country).iterrows()]
 
 
 @app.callback([Output('graph1', 'figure'),
@@ -76,7 +76,7 @@ def display_graph(country):
     if len(country) > 10:
         return px.line([0]), True
     
-    fig = px.line(get_data(country), y=country, x=get_data(country).index)
+    fig = px.line(get_data_cases(country), y=country, x=get_data_cases(country).index)
     fig.update_layout(
         title={'text': 'Cases', 'xanchor': 'center', 'x': 0.5},
         xaxis_title=None,
@@ -123,8 +123,8 @@ def display_graph(country):
     fig = go.Figure(data=[
         go.Bar(
             name=c,
-            x=get_data_frame().index,
-            y=removeNegatives(get_data(c).diff())
+            x=get_data_frame_cases().index,
+            y=removeNegatives(get_data_cases(c).diff())
         ) for c in country
     ])
     fig.update_layout(
