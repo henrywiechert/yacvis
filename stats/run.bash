@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#plasma_store -m 100000000 -s /tmp/plasma &
-#sleep 1
+plasma_store -m 100000000 -s /tmp/plasma &
+sleep 1
 
 if $(python --version | grep "Python 3" > /dev/null); then
   echo "PYTHON points to python3"

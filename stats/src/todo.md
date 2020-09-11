@@ -1,11 +1,13 @@
 # TODO
 
 x remove '/' from country names
-- clear naming of axes
+x clear naming of axes
 - n-cases starting point display toggle
 - n-day average line
 - cases in relation to population
-- deaths column in dataframe
+x deaths column in dataframe
+- add deaths to table
+- add other metrics to table (population, cases/p, deaths/p)
 - show death graphs in tabs
 - population column in dataframe
 - index column in table (independent on sorting)
@@ -17,3 +19,4 @@ x remove '/' from country names
     - detect highest "weekend" gaps
     - detect non-regular datasets (strange value changes etc.)
     - store presets (e.g. Country selection)
+- refactoring

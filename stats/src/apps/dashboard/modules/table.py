@@ -27,6 +27,21 @@ def get_data_frame_cases():
     df = brain['df_covid_cases']
     return df
 
+def get_country_df_deaths(country):
+    df = brain['df_covid_deaths'].tail(1).T
+    if not country:
+        return df
+    else:
+        return df.filter(country, axis=0)
+
+def get_data_deaths(country):
+    df = brain['df_covid_deaths']
+    return df[country]
+
+def get_data_frame_deaths():
+    df = brain['df_covid_deaths']
+    return df
+
 def layout():
     return dbc.Container(
             children=[
@@ -49,14 +64,28 @@ def layout():
                     ],
                     )
                 ),
-                dbc.Container(html.Div(children=[
-                    dcc.Graph(id='graph1'),
-                    dcc.Graph(id='graph2')
-                    ],
-                    hidden=True,
-                    id='graph_div',
-                    style={'border': '1px solid grey', 'margin-left': '-30px', 'margin-right': '-30px'}
-                ))
+                dbc.Tabs([
+                    dbc.Tab(
+                        dbc.Container(html.Div(children=[
+                            dcc.Graph(id='graph1'),
+                            dcc.Graph(id='graph2')
+                            ],
+                            hidden=True,
+                            id='graph_div',
+                        )),
+                        label='Cases'
+                    ),
+                    dbc.Tab(
+                        dbc.Container(html.Div(children=[
+                            dcc.Graph(id='graph3'),
+                            dcc.Graph(id='graph4')
+                            ],
+                            hidden=True,
+                            id='graph_div2',
+                        )),
+                        label='Deaths'
+                    )]
+                )
             ],
     )
 
@@ -130,6 +159,91 @@ def display_graph(country):
     fig.update_layout(
         barmode='group',
         title={'text': 'Daily Cases', 'xanchor': 'center', 'x': 0.5},
+        plot_bgcolor='rgba(0,0,0,0)',
+        xaxis_title=None,
+        yaxis_title=None,
+        xaxis=dict(
+            autorange=True,
+            showgrid=True,
+            ticks='',
+            showticklabels=True
+        ),
+        yaxis=dict(
+            autorange=True,
+            showgrid=True,
+            ticks='',
+            showticklabels=True,
+            gridcolor='lightgrey'
+        ),
+        legend=dict(
+            orientation="v",
+            bordercolor="Black",
+            borderwidth=0.1,
+            yanchor="top",
+            y=0.99,
+            xanchor="left",
+            x=0.01),
+    )
+    return fig
+
+@app.callback([Output('graph3', 'figure'),
+               Output('graph_div2', 'hidden')],
+              [Input('dropdown_country', 'value')])
+def display_graph_deaths(country):
+    if not country:
+        return px.line([0]), True
+    if len(country) > 10:
+        return px.line([0]), True
+    
+    fig = px.line(get_data_deaths(country), y=country, x=get_data_deaths(country).index)
+    fig.update_layout(
+        title={'text': 'Deaths', 'xanchor': 'center', 'x': 0.5},
+        xaxis_title=None,
+        yaxis_title=None,
+        plot_bgcolor='rgba(0,0,0,0)',
+        legend_title_text='',
+        xaxis=dict(
+            autorange=True,
+            showgrid=True,
+            ticks='',
+            showticklabels=True
+        ),
+        yaxis=dict(
+            autorange=True,
+            showgrid=True,
+            ticks='',
+            showticklabels=True,
+            gridcolor='lightgrey'
+        ),
+        legend=dict(
+            orientation="v",
+            bordercolor="Black",
+            borderwidth=0.1,
+            yanchor="top",
+            y=0.99,
+            xanchor="left",
+            x=0.01),
+    )
+    return fig, False
+
+@app.callback(Output('graph4', 'figure'),
+              [Input('dropdown_country', 'value')])
+def display_graph(country):
+    if not country:
+        return px.line([0])
+    if len(country) > 10:
+        return px.line([0])
+
+    fig = go.Figure(data=[
+        go.Bar(
+            name=c,
+            x=get_data_frame_deaths().index,
+            y=removeNegatives(get_data_deaths(c).diff())
+        ) for c in country
+    ])
+    fig.update_layout(
+        barmode='group',
+        title={'text': 'Daily Deaths', 'xanchor': 'center', 'x': 0.5},
         plot_bgcolor='rgba(0,0,0,0)',
         xaxis_title=None,
         yaxis_title=None,
