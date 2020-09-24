@@ -15,5 +15,5 @@ class Data(Brain):
     def deaths(self):
         return self[DEATHS_TABLE_NAME]
 
-    def cases(countries):
+    def cases(self, countries):
         return cases[[countries]]
